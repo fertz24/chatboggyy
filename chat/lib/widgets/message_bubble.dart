@@ -20,7 +20,7 @@ class MessageBubble extends StatelessWidget {
     return Column(
       crossAxisAlignment: alignment,
       children: [
-        if(child != null) ...[
+        if(child != null) ...[ //concatena un array 
         Container(
           decoration: BoxDecoration(
             color: colorBubble, 
