@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class MessageFieldBox extends StatelessWidget{
   const MessageFieldBox({super.key});
 
@@ -13,8 +12,14 @@ class MessageFieldBox extends StatelessWidget{
     return TextFormField(
       controller: textController,
       focusNode: focusNode,
-      decoration: _customImputDecoration(colors: colors),
-
+      decoration: _customImputDecoration(
+        colors: colors,
+        onSend: () {
+          print('Quiero enviar el mensaje ${textController}');
+          textController.clear();
+          focusNode.requestFocus();
+        },
+      ),
       onTapOutside: (event) {
         print('Quiero saber que haces $event');
         focusNode.unfocus();
@@ -28,11 +33,15 @@ class MessageFieldBox extends StatelessWidget{
     );
   }
 
-  InputDecoration _customImputDecoration({required ColorScheme colors}) => 
+  InputDecoration _customImputDecoration({
+    required ColorScheme colors,
+    required VoidCallback onSend,
+    }) => 
   InputDecoration(
     enabledBorder: _customOutlineDecoration(colors.primary),
     focusedBorder: _customOutlineDecoration(colors.primaryContainer),
     hintText: 'Escribe un mensaje',
+    suffixIcon: IconButton(onPressed: () {}, icon: const Icon(Icons.send))
     );
 
   OutlineInputBorder _customOutlineDecoration(Color color) =>
