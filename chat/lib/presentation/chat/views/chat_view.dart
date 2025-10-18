@@ -1,7 +1,10 @@
-import 'package:chat/views/her_message_bubble_view.dart';
-import 'package:chat/views/my_message_bubble_view.dart';
-import 'package:chat/widgets/message_field_box.dart';
+import 'package:chat/domain/entities/message.dart';
+import 'package:chat/presentation/chat/views/her_message_bubble_view.dart';
+import 'package:chat/presentation/chat/views/my_message_bubble_view.dart';
+import 'package:chat/presentation/chat/widgets/message_field_box.dart';
+import 'package:chat/providers/chat_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ChatView extends StatelessWidget{
   const ChatView({super.key});
@@ -9,6 +12,8 @@ class ChatView extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final ChatProvider chatProvider = context.watch<ChatProvider>();
+
     return SafeArea( //area segura (si no, no tiene limite)
     //sin el area segura el texto y compononentes haran un overflow, el listado lo pone fuera de la pantalla
         child: Column(
@@ -17,17 +22,16 @@ class ChatView extends StatelessWidget{
                 child: Padding( //espacio entre elementos
                   padding: EdgeInsetsDirectional.symmetric(horizontal: 10), //mueve de forma horizontal
                   child: ListView.builder(
-                    itemCount: 4, //se pone un limite en los mensajes sino este sera infinito
+                    itemCount: chatProvider.messagesList.length, //longitud de las cadenas del listado
                     itemBuilder: (context, index) {
-                    return index % 2 == 0
+                    return chatProvider.messagesList[index].fromWho == FromWho.hers
                       ? HerMessageBubbleView(
                         colorScheme: colorScheme,
-                        urlImageBubble:
-                            'https://yesno.wtf/assets/no/8-5e08abbe5aacd2cf531948145b787e9a.gif',
+                        urlImageBubble: chatProvider.messagesList[index].imageUrl!, //forzar que si hay una imagen
                       )
                     : MyMessageBubbleView(
                       colorScheme: colorScheme, 
-                      message: "Hola mundo"
+                      message: chatProvider.messagesList[index].text,
                       );
                   },
                 ),
