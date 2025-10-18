@@ -1,4 +1,3 @@
-
 //en esto se basa el mensaje
 enum FromWho { me, hers } //los del mensaje
 

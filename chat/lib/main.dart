@@ -1,7 +1,7 @@
 import 'package:chat/providers/chat_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:chat/config/theme/app_theme.dart';
-import 'package:chat/presentation/chat/chat_screen.dart';
+import 'package:chat/presentation/screen/chat/chat_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {

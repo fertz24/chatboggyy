@@ -1,7 +1,7 @@
 import 'package:chat/domain/entities/message.dart';
-import 'package:chat/presentation/chat/views/her_message_bubble_view.dart';
-import 'package:chat/presentation/chat/views/my_message_bubble_view.dart';
-import 'package:chat/presentation/chat/widgets/message_field_box.dart';
+import 'package:chat/presentation/views/her_message_bubble_view.dart';
+import 'package:chat/presentation/views/my_message_bubble_view.dart';
+import 'package:chat/presentation/widgets/message_field_box.dart';
 import 'package:chat/providers/chat_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
