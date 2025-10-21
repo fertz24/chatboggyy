@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 
-class MessageFieldBox extends StatelessWidget{
-  const MessageFieldBox({super.key});
+class MessageFieldBox extends StatefulWidget {
+  final void Function(String) onValue;
 
+  const MessageFieldBox({super.key, required this.onValue});
+
+  @override
+  State<MessageFieldBox> createState() => _MessageFieldBoxState();
+}
+
+class _MessageFieldBoxState extends State<MessageFieldBox> {
   @override
   Widget build(BuildContext context) {
     final TextEditingController textController = TextEditingController();
@@ -15,9 +22,14 @@ class MessageFieldBox extends StatelessWidget{
       decoration: _customImputDecoration(
         colors: colors,
         onSend: () {
-          print('Quiero enviar el mensaje ${textController}');
-          textController.clear();
-          focusNode.requestFocus();
+          final textValue = textController.value.text;
+          print(textController.value.text);
+          if (textValue.isNotEmpty) {
+            
+            widget.onValue(textValue);
+            textController.clear();
+            focusNode.requestFocus();
+          }
         },
       ),
       onTapOutside: (event) {
@@ -26,7 +38,7 @@ class MessageFieldBox extends StatelessWidget{
       },
 
       onFieldSubmitted: (value) {
-        print('Hola soy del equipo de las fers $value');
+        widget.onValue(value);
         textController.clear();
         focusNode.requestFocus();
       },
@@ -36,17 +48,16 @@ class MessageFieldBox extends StatelessWidget{
   InputDecoration _customImputDecoration({
     required ColorScheme colors,
     required VoidCallback onSend,
-    }) => 
-  InputDecoration(
+  }) => InputDecoration(
     enabledBorder: _customOutlineDecoration(colors.primary),
     focusedBorder: _customOutlineDecoration(colors.primaryContainer),
     hintText: 'Escribe un mensaje',
-    suffixIcon: IconButton(onPressed: () {}, icon: const Icon(Icons.send))
-    );
+    suffixIcon: IconButton(onPressed: onSend, icon: const Icon(Icons.send)),
+  );
 
   OutlineInputBorder _customOutlineDecoration(Color color) =>
-  OutlineInputBorder(
-    borderSide: BorderSide(color: color),
-    borderRadius: BorderRadius.circular(20),
-  );
+      OutlineInputBorder(
+        borderSide: BorderSide(color: color),
+        borderRadius: BorderRadius.circular(20),
+      );
 }
