@@ -1,4 +1,5 @@
 import 'package:chat/domain/entities/message.dart';
+import 'package:chat/infrastructure/datasource/get_yes_no_answer.dart';
 import 'package:flutter/material.dart';
 
 class ChatProvider extends ChangeNotifier{ //este le ayuda a provider, con esto notificamos cambios
@@ -26,8 +27,12 @@ class ChatProvider extends ChangeNotifier{ //este le ayuda a provider, con esto 
   ];
 
   Future<void> sendMessage(String message) async {
-     final newMessage = Message(text: message, fromWho: FromWho.me);
-    messagesList.add(newMessage);
-     notifyListeners();
+      final newMessage = Message(text: message, fromWho: FromWho.me);
+      messagesList.add(newMessage);
+      notifyListeners(); //respuesta de uno
+
+      final response = await GetYesNoAnswer().getAnswer();
+      messagesList.add(response);
+      notifyListeners(); //respuesta del otro
   }
 }

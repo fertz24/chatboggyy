@@ -24,12 +24,13 @@ class _MessageFieldBoxState extends State<MessageFieldBox> {
         onSend: () {
           final textValue = textController.value.text;
           print(textController.value.text);
-          if (textValue.isNotEmpty) {
+          if (textValue.isNotEmpty) { //si el controller no tiene valor entonces no mostrara nada
             
-            widget.onValue(textValue);
+            widget.onValue(textValue); 
             textController.clear();
             focusNode.requestFocus();
           }
+          
         },
       ),
       onTapOutside: (event) {
