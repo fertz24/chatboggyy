@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class MessageFieldBox extends StatefulWidget {
-  final void Function(String) onValue;
+  final Function(String) onSend;
 
-  const MessageFieldBox({super.key, required this.onValue});
+  const MessageFieldBox({super.key, required this.onSend});
 
   @override
   State<MessageFieldBox> createState() => _MessageFieldBoxState();
@@ -22,15 +22,12 @@ class _MessageFieldBoxState extends State<MessageFieldBox> {
       decoration: _customImputDecoration(
         colors: colors,
         onSend: () {
-          final textValue = textController.value.text;
-          print(textController.value.text);
-          if (textValue.isNotEmpty) { //si el controller no tiene valor entonces no mostrara nada
-            
-            widget.onValue(textValue); 
+          print('Quiero enviar el mensaje ${textController.value.text}');
+          if (textController.value.text.isNotEmpty) { //si el controller no tiene valor entonces no mostrara nada
+            widget.onSend(textController.value.text); 
             textController.clear();
             focusNode.requestFocus();
           }
-          
         },
       ),
       onTapOutside: (event) {
@@ -39,7 +36,7 @@ class _MessageFieldBoxState extends State<MessageFieldBox> {
       },
 
       onFieldSubmitted: (value) {
-        widget.onValue(value);
+        widget.onSend(value);
         textController.clear();
         focusNode.requestFocus();
       },
@@ -52,7 +49,7 @@ class _MessageFieldBoxState extends State<MessageFieldBox> {
   }) => InputDecoration(
     enabledBorder: _customOutlineDecoration(colors.primary),
     focusedBorder: _customOutlineDecoration(colors.primaryContainer),
-    hintText: 'Escribe un mensaje',
+    hintText: 'Envía tu pregunta',
     suffixIcon: IconButton(onPressed: onSend, icon: const Icon(Icons.send)),
   );
 
@@ -60,5 +57,5 @@ class _MessageFieldBoxState extends State<MessageFieldBox> {
       OutlineInputBorder(
         borderSide: BorderSide(color: color),
         borderRadius: BorderRadius.circular(20),
-      );
+  );
 }

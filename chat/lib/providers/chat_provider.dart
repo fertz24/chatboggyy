@@ -11,8 +11,11 @@ class ChatProvider extends ChangeNotifier{ //este le ayuda a provider, con esto 
   Future<void> sendMessage(String message) async {
       final newMessage = Message(text: message, fromWho: FromWho.me);
       await setMessagesList(newMessage);
-      final response = await GetYesNoAnswer().getAnswer();
-      await setMessagesList(response);
+    
+      if(message.endsWith('?')) {
+        final response = await GetYesNoAnswer().getAnswer();
+        await setMessagesList(response);
+      }
   }
 
     Future<void> setMessagesList(Message message) async {
